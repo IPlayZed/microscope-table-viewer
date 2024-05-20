@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:MicroscopeTable.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <Border Background="LightBlue" Margin="5">
+        <StackPanel>
+            <!-- Add controls here -->
+            <TextBlock Text="Gear stepper controls" Margin="5" />
+        </StackPanel>
+    </Border>
 </UserControl>

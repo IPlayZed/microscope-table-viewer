@@ -16,10 +16,5 @@ namespace MicroscopeTable.Components
 
             table = new Table();
         }
-
-        // Event handler for Canvas mouse click1
-        private void VisualizationCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-        }
     }
 }
