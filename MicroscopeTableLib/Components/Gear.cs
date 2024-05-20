@@ -2,7 +2,7 @@
 
 namespace MicroscopeTableLib.Components
 {
-    internal class Gear
+    public class Gear
     {
         public uint NumberOfSteps { get; }
 
