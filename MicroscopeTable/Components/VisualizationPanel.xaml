@@ -7,18 +7,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Canvas Name="MainCanvas">
+        <Canvas Name="MainCanvas" MouseLeftButtonDown="MainCanvas_MouseLeftButtonDown">
             <!-- Background -->
             <Rectangle Fill="LightGray" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Canvas}}"/>
+            <!-- Microscope Table -->
+            <Rectangle Name="MicroscopeTableRect"
+                       Width="200" Height="150"
+                       Fill="Blue" Opacity="0.5"
+                       Stroke="Black" StrokeThickness="2"
+                       Canvas.Left="0" Canvas.Top="0"/>
             <!-- Coordinate display TextBlock -->
             <TextBlock Name="CoordinateTextBlock"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Bottom"
+                       Canvas.Right="10"
+                       Canvas.Bottom="10"
                        Foreground="Black"
                        Background="White"
                        Padding="5"
-                       Canvas.Right="10"
-                       Canvas.Bottom="10"/>
+                       IsHitTestVisible="False"/>
             <!-- Center lines -->
             <Line Name="HorizontalLine" Stroke="Red" StrokeThickness="1"/>
             <Line Name="VerticalLine" Stroke="Red" StrokeThickness="1"/>
