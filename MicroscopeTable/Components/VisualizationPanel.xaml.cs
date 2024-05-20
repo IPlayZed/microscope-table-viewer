@@ -1,12 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace MicroscopeTable.Components
 {
     public partial class VisualizationPanel : UserControl
     {
         private Point center;
+        private double zCoordinate;
 
         public VisualizationPanel()
         {
@@ -14,6 +16,7 @@ namespace MicroscopeTable.Components
             Loaded += OnLoaded;
             SizeChanged += OnSizeChanged;
             MainCanvas.MouseMove += OnMouseMove;
+            MainCanvas.MouseWheel += OnMouseWheel;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -49,7 +52,20 @@ namespace MicroscopeTable.Components
         {
             var position = e.GetPosition(MainCanvas);
             var relativePosition = new Point(position.X - center.X, center.Y - position.Y);
-            CoordinateTextBlock.Text = $"X: {relativePosition.X:F2}, Y: {relativePosition.Y:F2}";
+            UpdateCoordinateText(relativePosition);
+        }
+
+        private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            zCoordinate += e.Delta > 0 ? 1 : -1;
+            var position = Mouse.GetPosition(MainCanvas);
+            var relativePosition = new Point(position.X - center.X, center.Y - position.Y);
+            UpdateCoordinateText(relativePosition);
+        }
+
+        private void UpdateCoordinateText(Point relativePosition)
+        {
+            CoordinateTextBlock.Text = $"X: {relativePosition.X:F2}, Y: {relativePosition.Y:F2}, Z: {zCoordinate:F2}";
         }
     }
 }

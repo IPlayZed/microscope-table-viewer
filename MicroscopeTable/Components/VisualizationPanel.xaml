@@ -16,7 +16,9 @@
                        VerticalAlignment="Bottom"
                        Foreground="Black"
                        Background="White"
-                       Padding="5" />
+                       Padding="5"
+                       Canvas.Right="10"
+                       Canvas.Bottom="10"/>
             <!-- Center lines -->
             <Line Name="HorizontalLine" Stroke="Red" StrokeThickness="1"/>
             <Line Name="VerticalLine" Stroke="Red" StrokeThickness="1"/>
