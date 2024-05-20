@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
@@ -26,12 +27,14 @@ namespace MicroscopeTable.Components
         {
             UpdateCenter();
             PositionMicroscopeTable();
+            UpdateClip();
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateCenter();
             PositionMicroscopeTable();
+            UpdateClip();
         }
 
         private void UpdateCenter()
@@ -104,6 +107,12 @@ namespace MicroscopeTable.Components
 
             MicroscopeTableRect.BeginAnimation(Canvas.LeftProperty, animX);
             MicroscopeTableRect.BeginAnimation(Canvas.TopProperty, animY);
+        }
+
+        private void UpdateClip()
+        {
+            RectangleGeometry clipGeometry = new RectangleGeometry(new Rect(0, 0, MainCanvas.ActualWidth, MainCanvas.ActualHeight));
+            MainCanvas.Clip = clipGeometry;
         }
     }
 }
