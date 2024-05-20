@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroscopeTable", "MicroscopeTable\MicroscopeTable.csproj", "{33DFC828-17FD-49F0-B119-2F008FD0E0A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroscopeTableLib", "MicroscopeTableLib\MicroscopeTableLib.csproj", "{60D2630A-9174-4426-BD47-62742E735B66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33DFC828-17FD-49F0-B119-2F008FD0E0A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33DFC828-17FD-49F0-B119-2F008FD0E0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33DFC828-17FD-49F0-B119-2F008FD0E0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33DFC828-17FD-49F0-B119-2F008FD0E0A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60D2630A-9174-4426-BD47-62742E735B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D2630A-9174-4426-BD47-62742E735B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D2630A-9174-4426-BD47-62742E735B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D2630A-9174-4426-BD47-62742E735B66}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C75569F6-AB34-4DDE-A813-DDE7F890B22E}
+	EndGlobalSection
+EndGlobal
