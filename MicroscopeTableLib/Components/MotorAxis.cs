@@ -27,7 +27,7 @@ namespace MicroscopeTableLib.Components
        
 
         // TODO: Check if this calculation is really sensible.
-        // TODO: Check if a controller could be used here sensibly.
+        // TODO: Check if a controller (PID or something else) could be used here sensibly.
         public uint MoveTo(double targetPosition)
         {
             double distancePerStep = MotorGear.StepSize;

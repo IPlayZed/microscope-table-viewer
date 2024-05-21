@@ -22,14 +22,14 @@ namespace MicroscopeTable.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MessageWindow {
+    internal class Exceptions {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MessageWindow() {
+        internal Exceptions() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MicroscopeTable.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MicroscopeTable.Resources.MessageWindow", typeof(MessageWindow).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MicroscopeTable.Resources.Exceptions", typeof(Exceptions).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,11 @@ namespace MicroscopeTable.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not communicate with control panel..
+        ///   Looks up a localized string similar to Parent window is null.{0}.
         /// </summary>
-        internal static string ControlPanelCommunicationError {
+        internal static string ParentWindowNull {
             get {
-                return ResourceManager.GetString("ControlPanelCommunicationError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        internal static string ErrorTitle {
-            get {
-                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+                return ResourceManager.GetString("ParentWindowNull", resourceCulture);
             }
         }
     }

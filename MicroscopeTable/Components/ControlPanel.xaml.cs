@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 
+// TODO: Use fields defined in the XAML.
 namespace MicroscopeTable.Components
 {
     public partial class ControlPanel : UserControl
