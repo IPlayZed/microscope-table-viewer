@@ -1,9 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using System.Windows.Media;
+using System.Windows;
 
 namespace MicroscopeTable.Components
 {
@@ -14,6 +13,8 @@ namespace MicroscopeTable.Components
         private double zoomFactor = 1.0;
         private const double zoomIncrement = 0.1;
 
+        private GearControlPanel gearControlPanel;
+
         public VisualizationPanel()
         {
             InitializeComponent();
@@ -21,6 +22,9 @@ namespace MicroscopeTable.Components
             SizeChanged += OnSizeChanged;
             MainCanvas.MouseMove += OnMouseMove;
             MainCanvas.MouseWheel += OnMouseWheel;
+
+            // Find the GearControlPanel (you may need to adjust this depending on your UI structure)
+            gearControlPanel = FindVisualParent<GearControlPanel>(this);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -41,6 +45,7 @@ namespace MicroscopeTable.Components
         {
             center = new Point(MainCanvas.ActualWidth / 2, MainCanvas.ActualHeight / 2);
             UpdateCenterLines();
+            gearControlPanel?.UpdateCenterPosition(center.X, center.Y);
         }
 
         private void UpdateCenterLines()
@@ -113,6 +118,15 @@ namespace MicroscopeTable.Components
         {
             RectangleGeometry clipGeometry = new RectangleGeometry(new Rect(0, 0, MainCanvas.ActualWidth, MainCanvas.ActualHeight));
             MainCanvas.Clip = clipGeometry;
+        }
+
+        private static T FindVisualParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            var parentObject = VisualTreeHelper.GetParent(child);
+            if (parentObject == null) return null;
+
+            var parent = parentObject as T;
+            return parent ?? FindVisualParent<T>(parentObject);
         }
     }
 }
