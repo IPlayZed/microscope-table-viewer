@@ -3,6 +3,8 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
 using System.Windows;
+using MicroscopeTableLib.Components;
+using MicroscopeTableLib.Utilities;
 
 namespace MicroscopeTable.Components
 {
@@ -12,6 +14,7 @@ namespace MicroscopeTable.Components
         private double zCoordinate;
         private double zoomFactor = 1.0;
         private const double zoomIncrement = 0.1;
+        private Table microscopeTable;
 
         public VisualizationPanel()
         {
@@ -20,7 +23,8 @@ namespace MicroscopeTable.Components
             SizeChanged += OnSizeChanged;
             MainCanvas.MouseMove += OnMouseMove;
             MainCanvas.MouseWheel += OnMouseWheel;
-
+            microscopeTable = new Table();
+            int a = 1;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

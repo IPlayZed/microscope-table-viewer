@@ -2,43 +2,44 @@
 
 namespace MicroscopeTableLib.Components
 {
-    public class MotorAxis(GearConfiguration gearConfiguration, double defaultPosition = 0)
+    public class MotorAxis(GearConfiguration gearConfiguration = new(), double defaultPosition = 0)
     {
         private double CurrentPosition { get; set; } = defaultPosition;
-        private Gear Gear { get; set; } = new Gear(gearConfiguration.MaxNumberOfSteps, gearConfiguration.StepSize);
+        private Gear MotorGear { get; set; } = new Gear(gearConfiguration.MaxNumberOfSteps, gearConfiguration.StepSize);
 
         public double StepGear(uint numberOfSteps, bool increase)
         {
-            double distanceMoved = Gear.GetEffectiveMovement(numberOfSteps) * numberOfSteps;
+            double distanceMoved = MotorGear.GetEffectiveMovement(numberOfSteps) * numberOfSteps;
             if (increase)
             {
-                Gear.CurrentStep += numberOfSteps;
+                MotorGear.CurrentStep += numberOfSteps;
             }
             else
             {
-                Gear.CurrentStep -= numberOfSteps;
+                MotorGear.CurrentStep -= numberOfSteps;
                 distanceMoved *= -1;
             }
 
             CurrentPosition += distanceMoved;
 
-            return Gear.GetEffectiveMovement(numberOfSteps);
+            return MotorGear.GetEffectiveMovement(numberOfSteps);
         }
+       
 
         // TODO: Check if this calculation is really sensible.
         // TODO: Check if a controller could be used here sensibly.
         public uint MoveTo(double targetPosition)
         {
-            double distancePerStep = Gear.StepSize;
+            double distancePerStep = MotorGear.StepSize;
             uint closestStep = (uint)Math.Round(targetPosition / distancePerStep);
 
-            closestStep = Math.Max(0, Math.Min(closestStep, Gear.NumberOfSteps));
+            closestStep = Math.Max(0, Math.Min(closestStep, MotorGear.NumberOfSteps));
 
-            double currentEffectiveMovement = Gear.GetEffectiveMovement(Gear.CurrentStep);
+            double currentEffectiveMovement = MotorGear.GetEffectiveMovement(MotorGear.CurrentStep);
 
-            Gear.CurrentStep = closestStep;
+            MotorGear.CurrentStep = closestStep;
 
-            CurrentPosition += currentEffectiveMovement - Gear.GetEffectiveMovement(Gear.CurrentStep);
+            CurrentPosition += currentEffectiveMovement - MotorGear.GetEffectiveMovement(MotorGear.CurrentStep);
 
             return closestStep;
         }
