@@ -17,6 +17,6 @@
         <components:VisualizationPanel Grid.Column="0" />
 
         <!-- Smaller Panel -->
-        <components:ControlPanel Grid.Column="1" />
+        <components:ControlPanel Grid.Column="1" x:Name="controlpanel"/>
     </Grid>
 </Window>

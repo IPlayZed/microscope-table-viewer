@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using MicroscopeTable.Components;
+using System.Windows;
 
 namespace MicroscopeTable
 {
@@ -8,5 +9,7 @@ namespace MicroscopeTable
         {
             InitializeComponent();
         }
+
+        public ControlPanel GetControlPanel => controlpanel;
     }
 }

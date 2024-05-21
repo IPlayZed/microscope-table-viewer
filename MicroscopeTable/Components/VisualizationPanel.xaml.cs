@@ -13,8 +13,12 @@ namespace MicroscopeTable.Components
         private double zoomFactor = 1.0;
         private const double zoomIncrement = 0.1;
 
-        private ControlPanel gearControlPanel;
-
+        /// <summary>
+        /// This user control is responsible for visualizing the microscope table.
+        /// By clicking in the user control the table can be moved via an animation.
+        /// The mouse position is shown in the user control.
+        /// By scrolling up via the middle mouse button, the view area is zoomed into, by scrolling down, the view area is zoomed out of.
+        /// </summary>
         public VisualizationPanel()
         {
             InitializeComponent();
@@ -22,10 +26,13 @@ namespace MicroscopeTable.Components
             SizeChanged += OnSizeChanged;
             MainCanvas.MouseMove += OnMouseMove;
             MainCanvas.MouseWheel += OnMouseWheel;
-
-            gearControlPanel = FindVisualParent<ControlPanel>(this);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             UpdateCenter();
@@ -33,6 +40,11 @@ namespace MicroscopeTable.Components
             UpdateClip();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateCenter();
@@ -40,13 +52,19 @@ namespace MicroscopeTable.Components
             UpdateClip();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdateCenter()
         {
             center = new Point(MainCanvas.ActualWidth / 2, MainCanvas.ActualHeight / 2);
             UpdateCenterLines();
-            gearControlPanel?.UpdateCenterPosition(center.X, center.Y, zCoordinate);
+            UpdateControlPanelPosition(center.X, center.Y, zCoordinate);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdateCenterLines()
         {
             HorizontalLine.X1 = 0;
@@ -60,6 +78,11 @@ namespace MicroscopeTable.Components
             VerticalLine.Y2 = MainCanvas.ActualHeight;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             var position = e.GetPosition(MainCanvas);
@@ -67,6 +90,11 @@ namespace MicroscopeTable.Components
             UpdateCoordinateText(relativePosition);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
             zCoordinate += e.Delta > 0 ? 1 : -1; // Update Z coordinate on scroll
@@ -84,35 +112,56 @@ namespace MicroscopeTable.Components
             UpdateCoordinateText(relativePosition);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="relativePosition"></param>
         private void UpdateCoordinateText(Point relativePosition)
         {
             CoordinateTextBlock.Text = $"X: {relativePosition.X:F2}, Y: {relativePosition.Y:F2}, Z: {zCoordinate:F2}";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void PositionMicroscopeTable()
         {
             Canvas.SetLeft(MicroscopeTableRect, center.X - MicroscopeTableRect.Width / 2);
             Canvas.SetTop(MicroscopeTableRect, center.Y - MicroscopeTableRect.Height / 2);
+            UpdateControlPanelPosition(center.X, center.Y, zCoordinate);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var targetPosition = e.GetPosition(MainCanvas);
             AnimateMicroscopeTable(targetPosition);
+            UpdateControlPanelPosition(center.X, center.Y, zCoordinate);
         }
 
-        private void AnimateMicroscopeTable(Point targetPosition)
+        /// <summary>
+        /// Animate the movement of the rectangle representing the microscope table.
+        /// </summary>
+        /// <param name="targetPosition"> The new center position to move the microscope table to. </param>
+        private void AnimateMicroscopeTable(Point targetPosition, double animationStepSpeed = 0.5)
         {
             double targetLeft = targetPosition.X - MicroscopeTableRect.Width / 2;
             double targetTop = targetPosition.Y - MicroscopeTableRect.Height / 2;
 
-            DoubleAnimation animX = new DoubleAnimation(Canvas.GetLeft(MicroscopeTableRect), targetLeft, TimeSpan.FromSeconds(0.5));
-            DoubleAnimation animY = new DoubleAnimation(Canvas.GetTop(MicroscopeTableRect), targetTop, TimeSpan.FromSeconds(0.5));
+            DoubleAnimation animX = new DoubleAnimation(Canvas.GetLeft(MicroscopeTableRect), targetLeft, TimeSpan.FromSeconds(animationStepSpeed));
+            DoubleAnimation animY = new DoubleAnimation(Canvas.GetTop(MicroscopeTableRect), targetTop, TimeSpan.FromSeconds(animationStepSpeed));
 
             MicroscopeTableRect.BeginAnimation(Canvas.LeftProperty, animX);
             MicroscopeTableRect.BeginAnimation(Canvas.TopProperty, animY);
         }
 
+        /// <summary>
+        /// Make sure that the rectangle representing the microscope table is not shown outside the viewport.
+        /// </summary>
         private void UpdateClip()
         {
             RectangleGeometry clipGeometry = new RectangleGeometry(new Rect(0, 0, MainCanvas.ActualWidth, MainCanvas.ActualHeight));
@@ -126,6 +175,22 @@ namespace MicroscopeTable.Components
 
             var parent = parentObject as T;
             return parent ?? FindVisualParent<T>(parentObject);
+        }
+
+        private void UpdateControlPanelPosition(double x, double y, double z)
+        {
+            if (Window.GetWindow(this) is MainWindow parentWindow)
+            {
+                parentWindow.controlpanel.UpdateCenterPosition(x, y, z);
+            }
+            else
+            {
+                // Show error message to the user
+                MessageBox.Show("Could not communicate with control panel.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Throw an exception
+                throw new InvalidOperationException("Parent window is null. Unable to update ControlPanel position.");
+            }
         }
     }
 }
