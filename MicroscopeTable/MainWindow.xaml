@@ -17,6 +17,6 @@
         <components:VisualizationPanel Grid.Column="0" />
 
         <!-- Smaller Panel -->
-        <components:GearControlPanel Grid.Column="1" />
+        <components:ControlPanel Grid.Column="1" />
     </Grid>
 </Window>

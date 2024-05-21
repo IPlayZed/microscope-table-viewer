@@ -13,7 +13,7 @@ namespace MicroscopeTable.Components
         private double zoomFactor = 1.0;
         private const double zoomIncrement = 0.1;
 
-        private GearControlPanel gearControlPanel;
+        private ControlPanel gearControlPanel;
 
         public VisualizationPanel()
         {
@@ -23,8 +23,7 @@ namespace MicroscopeTable.Components
             MainCanvas.MouseMove += OnMouseMove;
             MainCanvas.MouseWheel += OnMouseWheel;
 
-            // Find the GearControlPanel (you may need to adjust this depending on your UI structure)
-            gearControlPanel = FindVisualParent<GearControlPanel>(this);
+            gearControlPanel = FindVisualParent<ControlPanel>(this);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -45,7 +44,7 @@ namespace MicroscopeTable.Components
         {
             center = new Point(MainCanvas.ActualWidth / 2, MainCanvas.ActualHeight / 2);
             UpdateCenterLines();
-            gearControlPanel?.UpdateCenterPosition(center.X, center.Y);
+            gearControlPanel?.UpdateCenterPosition(center.X, center.Y, zCoordinate);
         }
 
         private void UpdateCenterLines()
@@ -120,7 +119,7 @@ namespace MicroscopeTable.Components
             MainCanvas.Clip = clipGeometry;
         }
 
-        private static T FindVisualParent<T>(DependencyObject child) where T : DependencyObject
+        private static T? FindVisualParent<T>(DependencyObject child) where T : DependencyObject
         {
             var parentObject = VisualTreeHelper.GetParent(child);
             if (parentObject == null) return null;
