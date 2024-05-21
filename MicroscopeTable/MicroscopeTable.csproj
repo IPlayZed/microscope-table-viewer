@@ -12,4 +12,28 @@
     <ProjectReference Include="..\MicroscopeTableLib\MicroscopeTableLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\ControlPanel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ControlPanel.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\MessageWindow.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessageWindow.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\ControlPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MessageWindow.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageWindow.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
