@@ -12,15 +12,17 @@ namespace MicroscopeTableLib.Components
 
         public double StepSize { get; }
 
+        private uint _currentStep;
         public uint CurrentStep
         {
-            get => CurrentStep;
+            get => _currentStep;
             set
             {
                 if (value < 0 || value >= NumberOfSteps)
                 {
                     throw new InvalidPositionException(string.Format(Resources.Exceptions.InvalidStepPosition, value, NumberOfSteps));
                 }
+                _currentStep = value;
             }
         }
 

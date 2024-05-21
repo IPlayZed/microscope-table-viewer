@@ -9,7 +9,5 @@ namespace MicroscopeTable
         {
             InitializeComponent();
         }
-
-        public ControlPanel GetControlPanel => controlpanel;
     }
 }

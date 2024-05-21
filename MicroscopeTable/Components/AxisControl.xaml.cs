@@ -20,7 +20,10 @@ namespace MicroscopeTable.Components
             UpdateStepperMotor(CurrentStepTextBox, -1);
         }
 
+#pragma warning disable CA1822 // Mark members as static
+        // Reason: will work on this.
         private void UpdateStepperMotor(TextBox stepTextBox, int stepChange)
+#pragma warning restore CA1822 // Mark members as static
         {
             if (int.TryParse(stepTextBox.Text, out int currentStep))
             {
