@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" Margin="10">
                 <!-- Center Position Display -->
                 <TextBlock Text="Microscope Table Center" FontWeight="Bold" Margin="0,10,0,5"/>
