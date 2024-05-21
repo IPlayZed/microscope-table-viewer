@@ -3,12 +3,18 @@
     public readonly struct GearConfiguration
     {
         public uint MaxNumberOfSteps { get; }
-        public double StepSize { get; }
+        public double Diameter { get; }
 
-        public GearConfiguration(uint maxNumberOfSteps = 10, double stepSize = 1.0)
+        public GearConfiguration(uint maxNumberOfSteps, double diameter)
         {
             MaxNumberOfSteps = maxNumberOfSteps;
-            StepSize = stepSize;
+            Diameter = diameter;
+        }
+
+        public GearConfiguration()
+        {
+            MaxNumberOfSteps = 10;
+            Diameter = 1.0;
         }
     }
 }

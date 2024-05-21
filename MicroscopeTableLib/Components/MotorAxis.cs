@@ -2,10 +2,10 @@
 
 namespace MicroscopeTableLib.Components
 {
-    public class MotorAxis(GearConfiguration gearConfiguration = new(), double defaultPosition = 0)
+    public class MotorAxis(GearConfiguration gearConfiguration, double defaultPosition = 0)
     {
         private double CurrentPosition { get; set; } = defaultPosition;
-        private Gear MotorGear { get; set; } = new Gear(gearConfiguration.MaxNumberOfSteps, gearConfiguration.StepSize);
+        private Gear MotorGear { get; set; } = new Gear(gearConfiguration);
 
         public double StepGear(uint numberOfSteps, bool increase)
         {

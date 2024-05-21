@@ -1,12 +1,24 @@
 ﻿namespace MicroscopeTableLib.Utilities
 {
-    public readonly struct StepperConfiguration(
-        GearConfiguration xGear = new(),
-        GearConfiguration yGear = new(),
-        GearConfiguration zGear = new())
+    public readonly struct StepperConfiguration
     {
-        public GearConfiguration XGear { get; } = xGear;
-        public GearConfiguration YGear { get; } = yGear;
-        public GearConfiguration ZGear { get; } = zGear;
+        public GearConfiguration XGear { get; }
+        public GearConfiguration YGear { get; }
+        public GearConfiguration ZGear { get; }
+
+        public StepperConfiguration(GearConfiguration xGear, GearConfiguration yGear,
+            GearConfiguration zGear)
+        {
+            XGear = xGear;
+            YGear = yGear;
+            ZGear = zGear;
+        }
+
+        public StepperConfiguration() 
+        {
+            XGear = new GearConfiguration();
+            YGear = new GearConfiguration();
+            ZGear = new GearConfiguration();
+        }
     }
 }

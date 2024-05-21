@@ -24,7 +24,6 @@ namespace MicroscopeTable.Components
             MainCanvas.MouseMove += OnMouseMove;
             MainCanvas.MouseWheel += OnMouseWheel;
             microscopeTable = new Table();
-            int a = 1;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

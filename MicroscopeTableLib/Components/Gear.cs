@@ -1,4 +1,5 @@
 ﻿using MicroscopeTableLib.Exceptions;
+using MicroscopeTableLib.Utilities;
 
 namespace MicroscopeTableLib.Components
 {
@@ -26,9 +27,9 @@ namespace MicroscopeTableLib.Components
             }
         }
 
-        public Gear(uint numberOfSteps, double diameter)
+        public Gear(GearConfiguration gearConfiguration)
         {
-            (NumberOfSteps, Diameter) = (numberOfSteps, diameter);
+            (NumberOfSteps, Diameter) = (gearConfiguration.MaxNumberOfSteps, gearConfiguration.Diameter);
 
             Circumference = double.Pi * Diameter;
 
