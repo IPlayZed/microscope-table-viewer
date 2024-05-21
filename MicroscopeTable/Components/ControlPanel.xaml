@@ -21,16 +21,18 @@
                 <components:AxisControl x:Name="XAxisControl" />
 
                 <!-- Y Axis Control -->
-                <TextBlock Text="Y Axis" Margin="10,0,0,0"/>
+                <TextBlock Text="Y Axis"/>
                 <components:AxisControl x:Name="YAxisControl" />
 
                 <!-- Z Axis Control -->
-                <TextBlock Text="Z Axis" Margin="10,0,0,0"/>
+                <TextBlock Text="Z Axis"/>
                 <components:AxisControl x:Name="ZAxisControl" />
                 
                 <!-- Set simulation speed -->
                 <TextBlock Text="Simulation step speed (s):" VerticalAlignment="Center"/>
-                <TextBox Name="SimulationSpeed" Width="50" Margin="5,0"/>
+                <TextBox Name="SimulationSpeed"
+                         MinWidth="5"
+                         MinHeight="1"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

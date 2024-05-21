@@ -152,8 +152,11 @@ namespace MicroscopeTable.Components
             double targetLeft = targetPosition.X - MicroscopeTableRect.Width / 2;
             double targetTop = targetPosition.Y - MicroscopeTableRect.Height / 2;
 
-            DoubleAnimation animX = new DoubleAnimation(Canvas.GetLeft(MicroscopeTableRect), targetLeft, TimeSpan.FromSeconds(animationStepSpeed));
-            DoubleAnimation animY = new DoubleAnimation(Canvas.GetTop(MicroscopeTableRect), targetTop, TimeSpan.FromSeconds(animationStepSpeed));
+            DoubleAnimation animX = new(Canvas.GetLeft(MicroscopeTableRect), targetLeft, TimeSpan.FromSeconds(animationStepSpeed));
+            DoubleAnimation animY = new(Canvas.GetTop(MicroscopeTableRect), targetTop, TimeSpan.FromSeconds(animationStepSpeed));
+
+            animX.Completed += (s, e) => UpdateCenterAfterAnimation(targetPosition);
+            animY.Completed += (s, e) => UpdateCenterAfterAnimation(targetPosition);
 
             MicroscopeTableRect.BeginAnimation(Canvas.LeftProperty, animX);
             MicroscopeTableRect.BeginAnimation(Canvas.TopProperty, animY);
@@ -164,17 +167,8 @@ namespace MicroscopeTable.Components
         /// </summary>
         private void UpdateClip()
         {
-            RectangleGeometry clipGeometry = new RectangleGeometry(new Rect(0, 0, MainCanvas.ActualWidth, MainCanvas.ActualHeight));
+            RectangleGeometry clipGeometry = new(new Rect(0, 0, MainCanvas.ActualWidth, MainCanvas.ActualHeight));
             MainCanvas.Clip = clipGeometry;
-        }
-
-        private static T? FindVisualParent<T>(DependencyObject child) where T : DependencyObject
-        {
-            var parentObject = VisualTreeHelper.GetParent(child);
-            if (parentObject == null) return null;
-
-            var parent = parentObject as T;
-            return parent ?? FindVisualParent<T>(parentObject);
         }
 
         private void UpdateControlPanelPosition(double x, double y, double z)
@@ -191,6 +185,12 @@ namespace MicroscopeTable.Components
                 // Throw an exception
                 throw new InvalidOperationException("Parent window is null. Unable to update ControlPanel position.");
             }
+        }
+
+        private void UpdateCenterAfterAnimation(Point newCenter)
+        {
+            center = newCenter;
+            UpdateControlPanelPosition(center.X, center.Y, zCoordinate);
         }
     }
 }
