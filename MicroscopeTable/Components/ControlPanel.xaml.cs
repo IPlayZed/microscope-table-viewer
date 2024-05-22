@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using MicroscopeTableLib.Utilities;
+using System.Windows.Controls;
 
 // TODO: Use fields defined in the XAML.
 namespace MicroscopeTable.Components
@@ -10,9 +11,9 @@ namespace MicroscopeTable.Components
             InitializeComponent();
         }
 
-        public void UpdateCenterPosition(double x, double y, double z)
+        public void UpdateCenterPosition(Position newPosition)
         {
-            CenterPositionTextBlock.Text = $"X: {x:F2}, Y: {y:F2}, Z: {z:F2}";
+            CenterPositionTextBlock.Text = $"X: {newPosition.X:F2}, Y: {newPosition.Y:F2}, Z: {newPosition.Z:F2}";
         }
     }
 }

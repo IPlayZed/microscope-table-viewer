@@ -4,7 +4,7 @@ namespace MicroscopeTableLib.Components
 {
     public class MotorAxis(GearConfiguration gearConfiguration, double defaultPosition = 0)
     {
-        private double CurrentPosition { get; set; } = defaultPosition;
+        internal double CurrentPosition { get; set; } = defaultPosition;
         private Gear MotorGear { get; set; } = new Gear(gearConfiguration);
 
         public double StepGear(uint numberOfSteps, bool increase)
@@ -30,20 +30,18 @@ namespace MicroscopeTableLib.Components
         // TODO: Check if a controller (PID or something else) could be used here sensibly.
         public void MoveToTargetPosition(double targetPosition)
         {
-            double delta = targetPosition - CurrentPosition;
-            bool increase = delta > 0;
+            double delta = Math.Abs(targetPosition - CurrentPosition);
+            bool increase = targetPosition > CurrentPosition;
             uint requiredSteps = (uint)Math.Round(delta / MotorGear.StepSize);
             if (increase)
             {
                 MotorGear.CurrentStep += requiredSteps;
                 CurrentPosition += requiredSteps * MotorGear.StepSize;
-                int a = 1;
             }
             else
             {
                 MotorGear.CurrentStep -= requiredSteps;
                 CurrentPosition -= requiredSteps * MotorGear.StepSize;
-                int a = 1;
             }
         }
 

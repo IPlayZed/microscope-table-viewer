@@ -60,8 +60,6 @@ namespace MicroscopeTable.Components
 
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            var rawPosition = Mouse.GetPosition(MainCanvas);
-
             // Do not update the actual UI coordinate, if it is not possible to move the table there.
             double _zCoordinate = zCoordinate;
             _zCoordinate += e.Delta > 0 ? 1 : -1;
@@ -86,8 +84,6 @@ namespace MicroscopeTable.Components
             var relativePosition = new Point(rawPosition.X - center.X, center.Y - rawPosition.Y);
 
             // Get new positions requsted by the user.
-            //double newPosX = rawPosition.X - MicroscopeTableRect.Width / 2;
-            //double newPosY = rawPosition.Y - MicroscopeTableRect.Height / 2;
             double newPosX = relativePosition.X;
             double newPosY = relativePosition.Y;
 
@@ -115,7 +111,6 @@ namespace MicroscopeTable.Components
         {
             try
             {
-                // FIXME: position seems to be always out of range here.
                 microscopeTable.MoveTableTo(position);
                 return new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, microscopeTable.TablePosition.Z);
             }
@@ -190,7 +185,7 @@ namespace MicroscopeTable.Components
         {
             if (Window.GetWindow(this) is MainWindow parentWindow)
             {
-                parentWindow.controlpanel.UpdateCenterPosition(position.X, position.Y, position.Z);
+                parentWindow.controlpanel.UpdateCenterPosition(position);
             }
             else
             {
