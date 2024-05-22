@@ -3,8 +3,10 @@ using System.Windows.Controls;
 
 namespace MicroscopeTable.Components
 {
+    
     public partial class ControlPanel : UserControl
     {
+        private readonly static string Precision = "F3";
         public ControlPanel()
         {
             InitializeComponent();
@@ -21,11 +23,11 @@ namespace MicroscopeTable.Components
 
         public void UpdateCenterPosition(Position newPosition)
         {
-            CenterPositionTextBlock.Text = String.Format(
+            CenterPositionTextBlock.Text = string.Format(
                     MicroscopeTable.Resources.ControlPanel.CenterPositionTextBlockText,
-                    newPosition.X,
-                    newPosition.Y,
-                    newPosition.Z
+                    newPosition.X.ToString(Precision),
+                    newPosition.Y.ToString(Precision),
+                    newPosition.Z.ToString(Precision)
                 );
         }
 

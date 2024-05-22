@@ -93,10 +93,6 @@ namespace MicroscopeTable.Components
         {  
             // If table can't move there, do not update the UI.
             if (UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, zChange)) == null) return;
-
-            UIPositionMicroscopeTable();
-
-            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
         }
 
         internal void HandleMovement(Point rawPosition)
@@ -110,9 +106,7 @@ namespace MicroscopeTable.Components
             // If table can't move there, do not update the UI.
             if (UpdateMicroscopeTable(new(newPosX, newPosY, microscopeTable.TablePosition.Y)) == null) return;
 
-            UIAnimateMicroscopeTable(rawPosition);
-
-            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
+            UIHandleMovement(rawPosition);
         }
 
         private Point GetRelativePointFromCenter(double X, double Y)
@@ -135,8 +129,13 @@ namespace MicroscopeTable.Components
         }
 
         #region UI
+        internal void UIHandleMovement(Point rawPosition)
+        {
+            UIAnimateMicroscopeTable(rawPosition);
 
-        private void UIHandleZoom(int delta)
+            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
+        }
+        internal void UIHandleZoom(int delta)
         {
             viewPortHeight += delta > 0 ? 1 : -1;
 
@@ -145,6 +144,10 @@ namespace MicroscopeTable.Components
 
             MicroscopeTableRect.Width = 200 * zoomFactor;
             MicroscopeTableRect.Height = 150 * zoomFactor;
+
+            UIPositionMicroscopeTable();
+
+            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
         }
         private void UIUpdateCenter()
         {

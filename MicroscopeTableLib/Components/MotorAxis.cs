@@ -9,7 +9,7 @@ namespace MicroscopeTableLib.Components
 
         public double StepGear(uint numberOfSteps = 1, StepChange stepChange = StepChange.Increase)
         {
-            double distanceMoved = MotorGear.GetEffectiveMovement(numberOfSteps) * numberOfSteps;
+            double distanceMoved = MotorGear.GetEffectiveMovement(numberOfSteps);
             if (stepChange == StepChange.Increase)
             {
                 MotorGear.CurrentStep += numberOfSteps;
@@ -36,12 +36,12 @@ namespace MicroscopeTableLib.Components
             if (increase)
             {
                 MotorGear.CurrentStep += requiredSteps;
-                CurrentPosition += requiredSteps * MotorGear.StepSize;
+                CurrentPosition += MotorGear.GetEffectiveMovement(requiredSteps);
             }
             else
             {
                 MotorGear.CurrentStep -= requiredSteps;
-                CurrentPosition -= requiredSteps * MotorGear.StepSize;
+                CurrentPosition -= MotorGear.GetEffectiveMovement(requiredSteps);
             }
         }
 
