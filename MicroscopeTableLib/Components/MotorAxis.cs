@@ -7,14 +7,14 @@ namespace MicroscopeTableLib.Components
         internal double CurrentPosition { get; set; } = defaultPosition;
         private Gear MotorGear { get; set; } = new Gear(gearConfiguration);
 
-        public double StepGear(uint numberOfSteps, bool increase)
+        public double StepGear(uint numberOfSteps = 1, StepChange stepChange = StepChange.Increase)
         {
             double distanceMoved = MotorGear.GetEffectiveMovement(numberOfSteps) * numberOfSteps;
-            if (increase)
+            if (stepChange == StepChange.Increase)
             {
                 MotorGear.CurrentStep += numberOfSteps;
             }
-            else
+            else if (stepChange == StepChange.Decrease)
             {
                 MotorGear.CurrentStep -= numberOfSteps;
                 distanceMoved *= -1;

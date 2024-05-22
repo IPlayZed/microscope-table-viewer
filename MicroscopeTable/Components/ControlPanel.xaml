@@ -29,11 +29,13 @@
                 <components:AxisControl x:Name="ZAxisControl" />
                 
                 <!-- Set simulation speed -->
-                <TextBlock Text="Simulation step speed (s):" VerticalAlignment="Center"/>
-                <TextBox Name="SimulationSpeed"
-                         MinWidth="5"
-                         MinHeight="1"/>
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Simulation step speed (s):"/>
+                    <TextBox Name="SimulationSpeed" MinWidth="100" MinHeight="1" MaxWidth="100"
+                     HorizontalAlignment="Left" Margin="3,0"/>
+                </StackPanel>
             </StackPanel>
+            
         </ScrollViewer>
     </Grid>
 </UserControl>

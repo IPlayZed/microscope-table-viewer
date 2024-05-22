@@ -1,7 +1,6 @@
 ﻿using MicroscopeTableLib.Utilities;
 using System.Windows.Controls;
 
-// TODO: Use fields defined in the XAML.
 namespace MicroscopeTable.Components
 {
     public partial class ControlPanel : UserControl
@@ -9,11 +8,27 @@ namespace MicroscopeTable.Components
         public ControlPanel()
         {
             InitializeComponent();
+
+            InitializeAxisControls();
+        }
+
+        private void InitializeAxisControls()
+        {
+            XAxisControl.axis = AxisControl.Axis.X;
+            YAxisControl.axis = AxisControl.Axis.Y;
+            ZAxisControl.axis = AxisControl.Axis.Z;
         }
 
         public void UpdateCenterPosition(Position newPosition)
         {
-            CenterPositionTextBlock.Text = $"X: {newPosition.X:F2}, Y: {newPosition.Y:F2}, Z: {newPosition.Z:F2}";
+            CenterPositionTextBlock.Text = String.Format(
+                    MicroscopeTable.Resources.ControlPanel.CenterPositionTextBlockText,
+                    newPosition.X,
+                    newPosition.Y,
+                    newPosition.Z
+                );
         }
+
+
     }
 }

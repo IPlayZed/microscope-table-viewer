@@ -59,5 +59,14 @@ namespace MicroscopeTable.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X: {0}, Y: {1}, Z: {2}.
+        /// </summary>
+        internal static string CenterPositionTextBlockText {
+            get {
+                return ResourceManager.GetString("CenterPositionTextBlockText", resourceCulture);
+            }
+        }
     }
 }

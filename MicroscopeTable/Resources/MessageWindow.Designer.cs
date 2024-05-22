@@ -61,6 +61,15 @@ namespace MicroscopeTable.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Control panel&apos;s axis value was not set correctly..
+        /// </summary>
+        internal static string ControlPanelAxisNotSetCorrectly {
+            get {
+                return ResourceManager.GetString("ControlPanelAxisNotSetCorrectly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not communicate with control panel..
         /// </summary>
         internal static string ControlPanelCommunicationError {
@@ -75,6 +84,15 @@ namespace MicroscopeTable.Resources {
         internal static string ErrorTitle {
             get {
                 return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not communicate with visualiaztion panel..
+        /// </summary>
+        internal static string VisualizationPanelCommunicationError {
+            get {
+                return ResourceManager.GetString("VisualizationPanelCommunicationError", resourceCulture);
             }
         }
     }

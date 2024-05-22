@@ -61,6 +61,15 @@ namespace MicroscopeTable.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Axis value is {0}, which is unknown..
+        /// </summary>
+        internal static string AxisValueUnknown {
+            get {
+                return ResourceManager.GetString("AxisValueUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent window is null.{0}.
         /// </summary>
         internal static string ParentWindowNull {

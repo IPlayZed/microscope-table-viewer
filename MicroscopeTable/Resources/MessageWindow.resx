@@ -117,10 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ControlPanelAxisNotSetCorrectly" xml:space="preserve">
+    <value>Control panel's axis value was not set correctly.</value>
+  </data>
   <data name="ControlPanelCommunicationError" xml:space="preserve">
     <value>Could not communicate with control panel.</value>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="VisualizationPanelCommunicationError" xml:space="preserve">
+    <value>Could not communicate with visualiaztion panel.</value>
   </data>
 </root>

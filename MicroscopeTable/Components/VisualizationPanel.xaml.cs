@@ -18,7 +18,9 @@ namespace MicroscopeTable.Components
         private double zoomFactor = 1.0;
         private const double zoomIncrement = 0.1;
 
-        private readonly Table microscopeTable;
+        internal double simulationStepSpeed = 0.5;
+
+        internal readonly Table microscopeTable;
 
         public VisualizationPanel()
         {
@@ -64,17 +66,12 @@ namespace MicroscopeTable.Components
             double z = microscopeTable.TablePosition.Z;
             z += e.Delta > 0 ? 1 : -1;
 
-            // If table can't move there, do not update the UI.
-            if (UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, z)) == null) return;
+            HandleZoom(z);
 
             UIHandleZoom(e.Delta);
 
-            UIPositionMicroscopeTable();
-
             var rawPosition = e.GetPosition(MainCanvas);
             UIUpdateCoordinateText(GetRelativePointFromCenter(rawPosition.X, rawPosition.Y));
-
-            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
         }
 
         private void MainCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -82,6 +79,28 @@ namespace MicroscopeTable.Components
             // Get position raw coordinates on canvas.
             var rawPosition = e.GetPosition(MainCanvas);
 
+            HandleMovement(rawPosition);
+        }
+        private void UpdateClip()
+        {
+            RectangleGeometry clipGeometry = new(new Rect(0, 0, MainCanvas.ActualWidth, MainCanvas.ActualHeight));
+            MainCanvas.Clip = clipGeometry;
+        }
+
+        #endregion
+
+        internal void HandleZoom(double zChange)
+        {  
+            // If table can't move there, do not update the UI.
+            if (UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, zChange)) == null) return;
+
+            UIPositionMicroscopeTable();
+
+            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
+        }
+
+        internal void HandleMovement(Point rawPosition)
+        {
             var relativePosition = new Point(rawPosition.X - viewPortCenter.X, viewPortCenter.Y - rawPosition.Y);
 
             // Get new positions requsted by the user.
@@ -91,17 +110,10 @@ namespace MicroscopeTable.Components
             // If table can't move there, do not update the UI.
             if (UpdateMicroscopeTable(new(newPosX, newPosY, microscopeTable.TablePosition.Y)) == null) return;
 
-            UIAnimateMicroscopeTable(rawPosition);            
+            UIAnimateMicroscopeTable(rawPosition);
 
             UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
         }
-        private void UpdateClip()
-        {
-            RectangleGeometry clipGeometry = new(new Rect(0, 0, MainCanvas.ActualWidth, MainCanvas.ActualHeight));
-            MainCanvas.Clip = clipGeometry;
-        }
-
-        #endregion
 
         private Point GetRelativePointFromCenter(double X, double Y)
         {

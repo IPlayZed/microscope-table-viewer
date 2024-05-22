@@ -5,14 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="300">
-    <StackPanel Orientation="Horizontal">
-        <TextBlock Text="Steps:" VerticalAlignment="Center"/>
-        <TextBox Name="StepsTextBox" Width="50" Margin="5,0"/>
-        <TextBlock Text="Diameter:" VerticalAlignment="Center"/>
-        <TextBox Name="DiameterTextBox" Width="50" Margin="5,0"/>
-        <TextBlock Text="Current Step:" VerticalAlignment="Center"/>
-        <TextBox Name="CurrentStepTextBox" Width="50" Margin="5,0"/>
-        <Button Content="+" Click="OnIncrementClick"/>
-        <Button Content="-" Click="OnDecrementClick"/>
+    <StackPanel Orientation="Vertical" Margin="0,1">
+        <StackPanel Orientation="Horizontal" Margin="0,3">
+            <TextBlock Text="Steps:" VerticalAlignment="Center"/>
+            <TextBox Name="StepsTextBox" Width="50" Margin="5,0"/>
+            <TextBlock Text="Diameter:" VerticalAlignment="Center"/>
+
+            <TextBox Name="DiameterTextBox" Width="50" Margin="5,0"/>
+            <TextBlock Text="Current Step:" VerticalAlignment="Center"/>
+            <TextBox Name="CurrentStepTextBox" Width="50" Margin="5,0"/>
+
+            <Button Content="+" Click="OnIncrementClick"/>
+            <Button Content="-" Click="OnDecrementClick"/>
+        </StackPanel>
+        <Button Content="Update gear" Width="70" Height="20"/>
     </StackPanel>
 </UserControl>

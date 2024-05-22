@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:components="clr-namespace:MicroscopeTable.Components"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowState="Maximized"
+        Title="Microscope EDA" Height="450" Width="800">
     <Grid>
         <!-- Define columns: the first one is larger, the second one is smaller -->
         <Grid.ColumnDefinitions>
@@ -14,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Visualization Panel -->
-        <components:VisualizationPanel Grid.Column="0" />
+        <components:VisualizationPanel Grid.Column="0" x:Name="visualizationPanel"/>
 
         <!-- Smaller Panel -->
         <components:ControlPanel Grid.Column="1" x:Name="controlpanel"/>
