@@ -6,7 +6,7 @@ namespace MicroscopeTableLib.Components
     public class MotorAxis(GearConfiguration gearConfiguration, double defaultPosition = 0)
     {
         internal double CurrentPosition { get; set; } = defaultPosition;
-        private Gear MotorGear { get; set; } = new Gear(gearConfiguration);
+        public Gear MotorGear { get; set; } = new Gear(gearConfiguration);
 
         public double StepGear(uint numberOfSteps = 1, StepChange stepChange = StepChange.Increase)
         {

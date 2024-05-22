@@ -88,7 +88,7 @@ namespace MicroscopeTable.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not communicate with visualiaztion panel..
+        ///   Looks up a localized string similar to Could not communicate with visualization panel..
         /// </summary>
         internal static string VisualizationPanelCommunicationError {
             get {

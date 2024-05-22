@@ -18,46 +18,53 @@ namespace MicroscopeTable.Components
             InitializeComponent();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateFields();
+        }
+
+        private void UpdateFields()
+        {
+            var motorAxis = GetMotorAxis();
+            MaxStepsTextBox.Text = motorAxis.MotorGear.NumberOfSteps.ToString();
+            DiameterTextBox.Text = motorAxis.MotorGear.Diameter.ToString();
+            CurrentStepsTextBox.Text = motorAxis.MotorGear.CurrentStep.ToString();
+        }
+
         private void OnIncrementClick(object sender, RoutedEventArgs e)
         {
             GetMotorAxis().StepGear();
             HandleAnimation(axis);
+            UpdateFields();
         }
 
         private void OnDecrementClick(object sender, RoutedEventArgs e)
         {
             GetMotorAxis().StepGear(stepChange: StepChange.Decrease);
             HandleAnimation(axis, -120);
+            UpdateFields();
         }
 
         private void UpdateStepperMotor(TextBox stepTextBox, int stepChange)
         {
-            if (int.TryParse(stepTextBox.Text, out int currentStep))
-            {
-                currentStep += stepChange;
-                stepTextBox.Text = currentStep.ToString();
-            }
-            else
-            {
-                stepTextBox.Text = "0";
-            }
+            
         }
 
         internal enum Axis {X,Y,Z}
 
-        private void HandleAnimation(Axis axis, int delta = 120)
+        private void HandleAnimation(Axis axis, int delta = 120, Point UIPoint = new())
         {
             switch (axis)
             {
                 case Axis.X:
                 case Axis.Y:
-                    GetVisualizationPanel().UIHandleMovement(new());
+                    GetVisualizationPanel().UIHandleMovement(UIPoint);
                     break;
                 case Axis.Z:
                     GetVisualizationPanel().UIHandleZoom(delta);
                     break;
                 default:
-                    break;
+                    throw HandleUnknownAxis(axis);
             }
         }
 
@@ -89,7 +96,8 @@ namespace MicroscopeTable.Components
         {
             return GetVisualizationPanel().microscopeTable;
         }
-
+        
+        // FIXME: Why is this thrown at close? (Debugging doesn't seem to break here.)
         private VisualizationPanel GetVisualizationPanel()
         {
             if (Window.GetWindow(this) is MainWindow parentWindow)

@@ -127,6 +127,6 @@
     <value>Error</value>
   </data>
   <data name="VisualizationPanelCommunicationError" xml:space="preserve">
-    <value>Could not communicate with visualiaztion panel.</value>
+    <value>Could not communicate with visualization panel.</value>
   </data>
 </root>
