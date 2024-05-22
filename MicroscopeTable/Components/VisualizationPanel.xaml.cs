@@ -12,9 +12,9 @@ namespace MicroscopeTable.Components
 {
     public partial class VisualizationPanel : UserControl
     {
-        private Point center;
+        private Point viewPortCenter;
+        private double viewPortHeight;
 
-        private double zCoordinate;
         private double zoomFactor = 1.0;
         private const double zoomIncrement = 0.1;
 
@@ -54,25 +54,26 @@ namespace MicroscopeTable.Components
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            var position = e.GetPosition(MainCanvas);
-            UIUpdateCoordinateText(GetRelativePointFromCenter(position.X, position.Y));
+            var rawPosition = e.GetPosition(MainCanvas);
+            UIUpdateCoordinateText(GetRelativePointFromCenter(rawPosition.X, rawPosition.Y));
         }
 
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
             // Do not update the actual UI coordinate, if it is not possible to move the table there.
-            double _zCoordinate = zCoordinate;
-            _zCoordinate += e.Delta > 0 ? 1 : -1;
+            double z = microscopeTable.TablePosition.Z;
+            z += e.Delta > 0 ? 1 : -1;
 
             // If table can't move there, do not update the UI.
-            if (UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, _zCoordinate)) == null) return;
+            if (UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, z)) == null) return;
 
             UIHandleZoom(e.Delta);
 
-            //UIPositionMicroscopeTable();
+            UIPositionMicroscopeTable();
 
-            var relativePosition = new Point(center.X, center.Y);
-            UIUpdateCoordinateText(relativePosition);
+            var rawPosition = e.GetPosition(MainCanvas);
+            UIUpdateCoordinateText(GetRelativePointFromCenter(rawPosition.X, rawPosition.Y));
+
             UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
         }
 
@@ -81,7 +82,7 @@ namespace MicroscopeTable.Components
             // Get position raw coordinates on canvas.
             var rawPosition = e.GetPosition(MainCanvas);
 
-            var relativePosition = new Point(rawPosition.X - center.X, center.Y - rawPosition.Y);
+            var relativePosition = new Point(rawPosition.X - viewPortCenter.X, viewPortCenter.Y - rawPosition.Y);
 
             // Get new positions requsted by the user.
             double newPosX = relativePosition.X;
@@ -104,7 +105,7 @@ namespace MicroscopeTable.Components
 
         private Point GetRelativePointFromCenter(double X, double Y)
         {
-            return new(X - center.X, center.Y - Y);
+            return new(X - viewPortCenter.X, viewPortCenter.Y - Y);
         }
 
         internal Position? UpdateMicroscopeTable(Position position)
@@ -125,7 +126,7 @@ namespace MicroscopeTable.Components
 
         private void UIHandleZoom(int delta)
         {
-            zCoordinate += delta > 0 ? 1 : -1;
+            viewPortHeight += delta > 0 ? 1 : -1;
 
             zoomFactor += delta > 0 ? zoomIncrement : -zoomIncrement;
             zoomFactor = Math.Max(0.1, zoomFactor);
@@ -135,33 +136,33 @@ namespace MicroscopeTable.Components
         }
         private void UIUpdateCenter()
         {
-            center = new Point(MainCanvas.ActualWidth / 2, MainCanvas.ActualHeight / 2);
+            viewPortCenter = new Point(MainCanvas.ActualWidth / 2, MainCanvas.ActualHeight / 2);
             UIUpdateCenterLines();
         }
 
         private void UIUpdateCenterLines()
         {
             HorizontalLine.X1 = 0;
-            HorizontalLine.Y1 = center.Y;
+            HorizontalLine.Y1 = viewPortCenter.Y;
             HorizontalLine.X2 = MainCanvas.ActualWidth;
-            HorizontalLine.Y2 = center.Y;
+            HorizontalLine.Y2 = viewPortCenter.Y;
 
-            VerticalLine.X1 = center.X;
+            VerticalLine.X1 = viewPortCenter.X;
             VerticalLine.Y1 = 0;
-            VerticalLine.X2 = center.X;
+            VerticalLine.X2 = viewPortCenter.X;
             VerticalLine.Y2 = MainCanvas.ActualHeight;
         }
 
         private void UIUpdateCoordinateText(Point relativePosition)
         {
-            CoordinateTextBlock.Text = $"X: {relativePosition.X:F2}, Y: {relativePosition.Y:F2}, Z: {zCoordinate:F2}";
+            CoordinateTextBlock.Text = $"X: {relativePosition.X:F2}, Y: {relativePosition.Y:F2}, Z: {viewPortHeight:F2}";
         }
 
         private void UIPositionMicroscopeTable()
         {
             // Get new positions.
-            double newPosX = center.X - MicroscopeTableRect.Width / 2;
-            double newPosY = center.Y - MicroscopeTableRect.Height / 2;
+            double newPosX = viewPortCenter.X - MicroscopeTableRect.Width / 2;
+            double newPosY = viewPortCenter.Y - MicroscopeTableRect.Height / 2;
 
             // Update the graphics.
             Canvas.SetLeft(MicroscopeTableRect, newPosX);
