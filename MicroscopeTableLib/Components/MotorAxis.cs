@@ -1,4 +1,5 @@
-﻿using MicroscopeTableLib.Utilities;
+﻿using MicroscopeTableLib.Exceptions;
+using MicroscopeTableLib.Utilities;
 
 namespace MicroscopeTableLib.Components
 {
@@ -30,9 +31,16 @@ namespace MicroscopeTableLib.Components
         // TODO: Check if a controller (PID or something else) could be used here sensibly.
         public void MoveToTargetPosition(double targetPosition)
         {
+            if (Math.Abs(targetPosition - CurrentPosition) < 0.0001) return;
             double delta = Math.Abs(targetPosition - CurrentPosition);
             bool increase = targetPosition > CurrentPosition;
             uint requiredSteps = (uint)Math.Round(delta / MotorGear.StepSize);
+            if (requiredSteps == 0)
+            {
+                throw new DidNotStepException(
+                    string.Format(Resources.Exceptions.DidNotStep, delta, MotorGear.StepSize)
+                    );
+            }
             if (increase)
             {
                 MotorGear.CurrentStep += requiredSteps;

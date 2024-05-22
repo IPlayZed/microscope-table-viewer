@@ -18,6 +18,8 @@ namespace MicroscopeTable.Components
         private double zoomFactor = 1.0;
         private const double zoomIncrement = 0.1;
 
+        internal double zoomStep = 5;
+
         internal double simulationStepSpeed = 0.5;
 
         internal readonly Table microscopeTable;
@@ -64,9 +66,9 @@ namespace MicroscopeTable.Components
         {
             // Do not update the actual UI coordinate, if it is not possible to move the table there.
             double z = microscopeTable.TablePosition.Z;
-            z += e.Delta > 0 ? 1 : -1;
+            z += e.Delta > 0 ? zoomStep : -zoomStep;
 
-            HandleZoom(z);
+            if (HandleZoom(z) == null) return;
 
             UIHandleZoom(e.Delta);
 
@@ -79,7 +81,9 @@ namespace MicroscopeTable.Components
             // Get position raw coordinates on canvas.
             var rawPosition = e.GetPosition(MainCanvas);
 
-            HandleMovement(rawPosition);
+            if (HandleMovement(rawPosition) == null) return;
+
+            UIHandleMovement(rawPosition);
         }
         private void UpdateClip()
         {
@@ -89,13 +93,13 @@ namespace MicroscopeTable.Components
 
         #endregion
 
-        internal void HandleZoom(double zChange)
-        {  
+        internal Position? HandleZoom(double zChange)
+        {
             // If table can't move there, do not update the UI.
-            if (UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, zChange)) == null) return;
+            return UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, zChange));
         }
 
-        internal void HandleMovement(Point rawPosition)
+        internal Position? HandleMovement(Point rawPosition)
         {
             var relativePosition = new Point(rawPosition.X - viewPortCenter.X, viewPortCenter.Y - rawPosition.Y);
 
@@ -104,9 +108,8 @@ namespace MicroscopeTable.Components
             double newPosY = relativePosition.Y;
 
             // If table can't move there, do not update the UI.
-            if (UpdateMicroscopeTable(new(newPosX, newPosY, microscopeTable.TablePosition.Y)) == null) return;
 
-            UIHandleMovement(rawPosition);
+            return UpdateMicroscopeTable(new(newPosX, newPosY, microscopeTable.TablePosition.Z));        
         }
 
         private Point GetRelativePointFromCenter(double X, double Y)
@@ -122,6 +125,11 @@ namespace MicroscopeTable.Components
                 return new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, microscopeTable.TablePosition.Z);
             }
             catch (InvalidPositionException ex)
+            {
+                MessageBox.Show(ex.Message, MessageWindow.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return null;
+            }
+            catch (DidNotStepException ex)
             {
                 MessageBox.Show(ex.Message, MessageWindow.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return null;

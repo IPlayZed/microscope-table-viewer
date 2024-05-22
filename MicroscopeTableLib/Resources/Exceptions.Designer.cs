@@ -61,6 +61,15 @@ namespace MicroscopeTableLib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Did not step gear, as the requested step size was {0}, but the minimum step size is {1}..
+        /// </summary>
+        internal static string DidNotStep {
+            get {
+                return ResourceManager.GetString("DidNotStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid step position: {0}. Stepper motor position can only be between the default (0) and the maximum ({1})..
         /// </summary>
         internal static string InvalidStepPosition {
