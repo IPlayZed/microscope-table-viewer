@@ -34,6 +34,8 @@ namespace MicroscopeTableLib.Components
             Circumference = double.Pi * Diameter;
 
             StepSize = Circumference / NumberOfSteps;
+
+            CurrentStep = NumberOfSteps / 2;
         }
 
 

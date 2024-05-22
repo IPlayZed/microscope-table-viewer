@@ -16,9 +16,9 @@ namespace MicroscopeTableLib.Components
 
         public void MoveTableTo(Position position)
         {
-            MotorAxisX.MoveTo(position.X);
-            MotorAxisY.MoveTo(position.Y);
-            MotorAxisZ.MoveTo(position.Z);
+            MotorAxisX.MoveToTargetPosition(position.X);
+            MotorAxisY.MoveToTargetPosition(position.Y);
+            MotorAxisZ.MoveToTargetPosition(position.Z);
         }
     }
 }

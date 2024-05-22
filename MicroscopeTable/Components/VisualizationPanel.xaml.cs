@@ -61,22 +61,21 @@ namespace MicroscopeTable.Components
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
             var rawPosition = Mouse.GetPosition(MainCanvas);
-            var relativePos = GetRelativePointFromCenter(rawPosition.X, rawPosition.Y);
 
             // Do not update the actual UI coordinate, if it is not possible to move the table there.
             double _zCoordinate = zCoordinate;
             _zCoordinate += e.Delta > 0 ? 1 : -1;
 
             // If table can't move there, do not update the UI.
-            if (UpdateMicroscopeTable(new(relativePos.X, relativePos.Y, _zCoordinate)) == null) return;
+            if (UpdateMicroscopeTable(new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, _zCoordinate)) == null) return;
 
             UIHandleZoom(e.Delta);
 
-            UIPositionMicroscopeTable();
+            //UIPositionMicroscopeTable();
 
-            
-            var relativePosition = new Point(rawPosition.X - center.X, center.Y - rawPosition.Y);
+            var relativePosition = new Point(center.X, center.Y);
             UIUpdateCoordinateText(relativePosition);
+            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
         }
 
         private void MainCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -87,15 +86,17 @@ namespace MicroscopeTable.Components
             var relativePosition = new Point(rawPosition.X - center.X, center.Y - rawPosition.Y);
 
             // Get new positions requsted by the user.
-            double newPosX = rawPosition.X - MicroscopeTableRect.Width / 2;
-            double newPosY = rawPosition.Y - MicroscopeTableRect.Height / 2;
+            //double newPosX = rawPosition.X - MicroscopeTableRect.Width / 2;
+            //double newPosY = rawPosition.Y - MicroscopeTableRect.Height / 2;
+            double newPosX = relativePosition.X;
+            double newPosY = relativePosition.Y;
 
             // If table can't move there, do not update the UI.
-            if (UpdateMicroscopeTable(new(newPosX, newPosY, zCoordinate)) == null) return;
+            if (UpdateMicroscopeTable(new(newPosX, newPosY, microscopeTable.TablePosition.Y)) == null) return;
 
             UIAnimateMicroscopeTable(rawPosition);            
 
-            UIUpdateTablePositionInControlPanel(new(relativePosition.X, relativePosition.Y, zCoordinate));
+            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
         }
         private void UpdateClip()
         {
@@ -115,7 +116,7 @@ namespace MicroscopeTable.Components
             try
             {
                 // FIXME: position seems to be always out of range here.
-                microscopeTable.MoveTableTo(new(position.X, position.Y, position.Z));
+                microscopeTable.MoveTableTo(position);
                 return new(microscopeTable.TablePosition.X, microscopeTable.TablePosition.Y, microscopeTable.TablePosition.Z);
             }
             catch (InvalidPositionException ex)
@@ -165,7 +166,7 @@ namespace MicroscopeTable.Components
         {
             // Get new positions.
             double newPosX = center.X - MicroscopeTableRect.Width / 2;
-            double newPosY = center.Y - MicroscopeTableRect.Width / 2;
+            double newPosY = center.Y - MicroscopeTableRect.Height / 2;
 
             // Update the graphics.
             Canvas.SetLeft(MicroscopeTableRect, newPosX);

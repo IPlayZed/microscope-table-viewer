@@ -28,20 +28,23 @@ namespace MicroscopeTableLib.Components
 
         // TODO: Check if this calculation is really sensible.
         // TODO: Check if a controller (PID or something else) could be used here sensibly.
-        public uint MoveTo(double targetPosition)
+        public void MoveToTargetPosition(double targetPosition)
         {
-            double distancePerStep = MotorGear.StepSize;
-            uint closestStep = (uint)Math.Round(targetPosition / distancePerStep);
-
-            closestStep = Math.Max(0, Math.Min(closestStep, MotorGear.NumberOfSteps));
-
-            double currentEffectiveMovement = MotorGear.GetEffectiveMovement(MotorGear.CurrentStep);
-
-            MotorGear.CurrentStep = closestStep;
-
-            CurrentPosition += currentEffectiveMovement - MotorGear.GetEffectiveMovement(MotorGear.CurrentStep);
-
-            return closestStep;
+            double delta = targetPosition - CurrentPosition;
+            bool increase = delta > 0;
+            uint requiredSteps = (uint)Math.Round(delta / MotorGear.StepSize);
+            if (increase)
+            {
+                MotorGear.CurrentStep += requiredSteps;
+                CurrentPosition += requiredSteps * MotorGear.StepSize;
+                int a = 1;
+            }
+            else
+            {
+                MotorGear.CurrentStep -= requiredSteps;
+                CurrentPosition -= requiredSteps * MotorGear.StepSize;
+                int a = 1;
+            }
         }
 
     }
