@@ -13,8 +13,8 @@
 
         public GearConfiguration()
         {
-            MaxNumberOfSteps = 500;
-            Diameter = 1.0;
+            MaxNumberOfSteps = 45;
+            Diameter = 100.0;
         }
     }
 }
