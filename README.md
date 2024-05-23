@@ -1,6 +1,6 @@
 # Microscope EDA
 
-![The application](resources/application-main.png)
+![The application](Resources/application-main.png)
 
 This application is a proof-of-concept simulation top-down view of a microscope table, basically a very simple EDA.
 
