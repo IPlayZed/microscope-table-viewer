@@ -32,8 +32,7 @@ The following features are avaiblable:
 - **Dependency free**: Only uses standard .NET functionality.
 
 To run the standalone version you need the [.NET 8.0 runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
-The standalone version is available in the [releases]() page.
-
+The standalone version is available in the [releases]() page. You can also list tagged releases.
 ## Developer notes
 
 - This is targeted for .NET8.
