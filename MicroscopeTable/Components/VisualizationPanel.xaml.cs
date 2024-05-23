@@ -54,6 +54,8 @@ namespace MicroscopeTable.Components
             UIUpdateCenter();
             UIPositionMicroscopeTable();
             UpdateClip();
+
+            UISetupSafezone();
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -61,6 +63,8 @@ namespace MicroscopeTable.Components
             UIUpdateCenter();
             UIPositionMicroscopeTable();
             UpdateClip();
+
+            UISetupSafezone();
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
@@ -241,6 +245,26 @@ namespace MicroscopeTable.Components
                 throw new InvalidOperationException(String.Format(Exceptions.ParentWindowNull,
                     " Unable to update table position on ControlPanel."));
             }
+        }
+
+        private void UISetupSafezone()
+        {
+            double width = microscopeTable.MotorAxisX.MotorGear.GetEffectiveMovement(microscopeTable.MotorAxisX.MotorGear.NumberOfSteps);
+            double height = microscopeTable.MotorAxisY.MotorGear.GetEffectiveMovement(microscopeTable.MotorAxisY.MotorGear.NumberOfSteps);
+
+            SafezoneRectangle.Width = width;
+            SafezoneRectangle.Height = height;
+
+            UICenterSafezone();
+        }
+
+        private void UICenterSafezone()
+        {
+            double left = viewPortCenter.X - SafezoneRectangle.Width / 2;
+            double top = viewPortCenter.Y - SafezoneRectangle.Height / 2;
+
+            Canvas.SetLeft(SafezoneRectangle, left);
+            Canvas.SetTop(SafezoneRectangle, top);
         }
 
         #endregion

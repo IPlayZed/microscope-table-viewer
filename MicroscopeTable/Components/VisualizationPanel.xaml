@@ -26,6 +26,7 @@
             <!-- Center lines -->
             <Line Name="HorizontalLine" Stroke="Red" StrokeThickness="1"/>
             <Line Name="VerticalLine" Stroke="Red" StrokeThickness="1"/>
+            <Rectangle x:Name="SafezoneRectangle" Fill="Green" Opacity="0.1" />
         </Canvas>
     </Grid>
 </UserControl>
