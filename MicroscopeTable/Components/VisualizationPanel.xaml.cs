@@ -158,7 +158,7 @@ namespace MicroscopeTable.Components
             MicroscopeTableRect.Height = initialMicroscopeTableRectHeight;
 
             UIHandleMovement(viewPortCenter);
-            
+            UISetupSafezone();
         }
 
         #region UI
