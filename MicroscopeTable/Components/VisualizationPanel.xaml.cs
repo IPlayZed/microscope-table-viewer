@@ -22,8 +22,6 @@ namespace MicroscopeTable.Components
 
         internal double simulationStepSpeed = 0.5;
 
-        private double initialMicroscopeTableRectLeft;
-        private double initialMicroscopeTableRectTop;
         private double initialMicroscopeTableRectWidth;
         private double initialMicroscopeTableRectHeight;
 
@@ -50,9 +48,6 @@ namespace MicroscopeTable.Components
         }
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Save the initial position and size of MicroscopeTableRect
-            initialMicroscopeTableRectLeft = Canvas.GetLeft(MicroscopeTableRect);
-            initialMicroscopeTableRectTop = Canvas.GetTop(MicroscopeTableRect);
             initialMicroscopeTableRectWidth = MicroscopeTableRect.Width;
             initialMicroscopeTableRectHeight = MicroscopeTableRect.Height;
 
@@ -153,11 +148,13 @@ namespace MicroscopeTable.Components
         {
             microscopeTable = new(tableConfiguration);
 
-            // Reset MicroscopeTableRect to its initial position and size
-            Canvas.SetLeft(MicroscopeTableRect, initialMicroscopeTableRectLeft);
-            Canvas.SetTop(MicroscopeTableRect, initialMicroscopeTableRectTop);
+            viewPortHeight = 0;
+            // Reset MicroscopeTableRect to its initial size
             MicroscopeTableRect.Width = initialMicroscopeTableRectWidth;
             MicroscopeTableRect.Height = initialMicroscopeTableRectHeight;
+
+            UIHandleMovement(viewPortCenter);
+            
         }
 
         #region UI
