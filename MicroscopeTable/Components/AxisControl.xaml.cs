@@ -1,6 +1,8 @@
 ﻿using MicroscopeTable.Resources;
 using MicroscopeTableLib.Components;
+using MicroscopeTableLib.Exceptions;
 using MicroscopeTableLib.Utilities;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,9 +10,9 @@ namespace MicroscopeTable.Components
 {
     public partial class AxisControl : UserControl
     {
-        // TODO: Maybe refactor the called function, so no "magic number" is needed for zooming.
-        private static readonly int SCROLL_UP = 120;
-        private static readonly int SCROLL_DOWN = -120;
+        // TODO: This is magic, so refactor called method to not require actual delta logic.
+        private const int SCROLL_UP = 120;
+        private const int SCROLL_DOWN = -SCROLL_UP;
 
         internal Axis axis;
         public AxisControl()
@@ -33,32 +35,51 @@ namespace MicroscopeTable.Components
 
         private void OnIncrementClick(object sender, RoutedEventArgs e)
         {
-            GetMotorAxis().StepGear();
+            if (HandleStep() == null) return;
             HandleAnimation(axis);
             UpdateFields();
         }
 
         private void OnDecrementClick(object sender, RoutedEventArgs e)
         {
-            GetMotorAxis().StepGear(stepChange: StepChange.Decrease);
-            HandleAnimation(axis, -120);
+            if(HandleStep(stepChange: StepChange.Decrease) == null) return;
+            HandleAnimation(axis, SCROLL_DOWN);
             UpdateFields();
-        }
-
-        private void UpdateStepperMotor(TextBox stepTextBox, int stepChange)
-        {
-            
         }
 
         internal enum Axis {X,Y,Z}
 
-        private void HandleAnimation(Axis axis, int delta = 120, Point UIPoint = new())
+        private double? HandleStep(uint numberOfSteps = 1, StepChange stepChange = StepChange.Increase)
+        {
+            try
+            {
+                return GetMotorAxis().StepGear(numberOfSteps, stepChange);
+            }
+            catch(InvalidPositionException ex)
+            {
+                MessageBox.Show(ex.Message, MessageWindow.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
+        }
+
+        internal void UpdateCurrentSteps()
+        {
+            CurrentStepsTextBox.Text = GetMotorAxis().MotorGear.CurrentStep.ToString();
+        }
+
+        // TODO: Moving on the X/Y would require geometry info here from the view panel, which is not structured for it.
+        private void HandleAnimation(Axis axis, int delta = SCROLL_UP)
         {
             switch (axis)
             {
                 case Axis.X:
                 case Axis.Y:
-                    GetVisualizationPanel().UIHandleMovement(UIPoint);
+                    MessageBox.Show(
+                        MessageWindow.ControlPanelNotImplemented 
+                        + " Modify X/Y coordinates by clicking on the visualization panel!",
+                        MessageWindow.InfoTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
                     break;
                 case Axis.Z:
                     GetVisualizationPanel().UIHandleZoom(delta);
@@ -97,7 +118,6 @@ namespace MicroscopeTable.Components
             return GetVisualizationPanel().microscopeTable;
         }
         
-        // FIXME: Why is this thrown at close? (Debugging doesn't seem to break here.)
         private VisualizationPanel GetVisualizationPanel()
         {
             if (Window.GetWindow(this) is MainWindow parentWindow)

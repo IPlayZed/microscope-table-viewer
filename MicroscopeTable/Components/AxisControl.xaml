@@ -6,20 +6,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="300"
              Loaded="Window_Loaded">
-    <StackPanel Orientation="Vertical" Margin="0,1">
-        <StackPanel Orientation="Horizontal" Margin="0,3">
-            <TextBlock Text="Max steps:" VerticalAlignment="Center"/>
-            <TextBox Name="MaxStepsTextBox" Width="50" Margin="5,0"/>
+    <StackPanel Orientation="Horizontal" Margin="0,3">
+        <TextBlock Text="Max steps:" VerticalAlignment="Center"/>
+        <TextBox Name="MaxStepsTextBox" Width="50" Margin="5,0"/>
 
-            <TextBlock Text="Diameter:" VerticalAlignment="Center"/>
-            <TextBox Name="DiameterTextBox" Width="50" Margin="5,0"/>
-            
-            <TextBlock Text="Current step:" VerticalAlignment="Center"/>
-            <TextBox Name="CurrentStepsTextBox" Width="50" Margin="5,0"/>
+        <TextBlock Text="Diameter:" VerticalAlignment="Center"/>
+        <TextBox Name="DiameterTextBox" Width="50" Margin="5,0"/>
 
-            <Button Content="+" Click="OnIncrementClick"/>
-            <Button Content="-" Click="OnDecrementClick"/>
-        </StackPanel>
-        <Button Content="Update gear" Width="70" Height="20"/>
+        <TextBlock Text="Current step:" VerticalAlignment="Center"/>
+        <TextBox Name="CurrentStepsTextBox" Width="50" Margin="5,0"/>
+
+        <Button Content="+" Click="OnIncrementClick"/>
+        <Button Content="-" Click="OnDecrementClick"/>
     </StackPanel>
 </UserControl>

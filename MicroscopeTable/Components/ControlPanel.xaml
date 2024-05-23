@@ -27,12 +27,16 @@
                 <!-- Z Axis Control -->
                 <TextBlock Text="Z Axis"/>
                 <components:AxisControl x:Name="ZAxisControl" />
-                
+
+                <!-- Collect values from axis controls and reset viewport according to them. -->
+                <Button Content="Update gear" Width="70" Height="20" Click="OnUpdateClick"/>
+
                 <!-- Set simulation speed -->
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <TextBlock Text="Simulation step speed (s):"/>
                     <TextBox Name="SimulationSpeed" MinWidth="100" MinHeight="1" MaxWidth="100"
                      HorizontalAlignment="Left" Margin="3,0"/>
+                    <Button Content="Update speed" Width="70" Height="20" Click="OnSimulationSpeedClick"/>
                 </StackPanel>
             </StackPanel>
             

@@ -22,7 +22,13 @@ namespace MicroscopeTable.Components
 
         internal double simulationStepSpeed = 0.5;
 
-        internal readonly Table microscopeTable;
+        private double initialMicroscopeTableRectLeft;
+        private double initialMicroscopeTableRectTop;
+        private double initialMicroscopeTableRectWidth;
+        private double initialMicroscopeTableRectHeight;
+
+
+        internal Table microscopeTable;
 
         public VisualizationPanel()
         {
@@ -44,6 +50,12 @@ namespace MicroscopeTable.Components
         }
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            // Save the initial position and size of MicroscopeTableRect
+            initialMicroscopeTableRectLeft = Canvas.GetLeft(MicroscopeTableRect);
+            initialMicroscopeTableRectTop = Canvas.GetTop(MicroscopeTableRect);
+            initialMicroscopeTableRectWidth = MicroscopeTableRect.Width;
+            initialMicroscopeTableRectHeight = MicroscopeTableRect.Height;
+
             UIUpdateCenter();
             UIPositionMicroscopeTable();
             UpdateClip();
@@ -136,12 +148,24 @@ namespace MicroscopeTable.Components
             }
         }
 
+        // TODO: Later handle custom starting positions and shifting view.
+        internal void ResetEnvironment(TableConfiguration tableConfiguration)
+        {
+            microscopeTable = new(tableConfiguration);
+
+            // Reset MicroscopeTableRect to its initial position and size
+            Canvas.SetLeft(MicroscopeTableRect, initialMicroscopeTableRectLeft);
+            Canvas.SetTop(MicroscopeTableRect, initialMicroscopeTableRectTop);
+            MicroscopeTableRect.Width = initialMicroscopeTableRectWidth;
+            MicroscopeTableRect.Height = initialMicroscopeTableRectHeight;
+        }
+
         #region UI
         internal void UIHandleMovement(Point rawPosition)
         {
-            UIAnimateMicroscopeTable(rawPosition);
+            UIAnimateMicroscopeTable(rawPosition, simulationStepSpeed);
 
-            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
+            UIUpdateDataInControlPanel(microscopeTable.TablePosition);
         }
         internal void UIHandleZoom(int delta)
         {
@@ -155,7 +179,7 @@ namespace MicroscopeTable.Components
 
             UIPositionMicroscopeTable();
 
-            UIUpdateTablePositionInControlPanel(microscopeTable.TablePosition);
+            UIUpdateDataInControlPanel(microscopeTable.TablePosition);
         }
         private void UIUpdateCenter()
         {
@@ -192,6 +216,8 @@ namespace MicroscopeTable.Components
             Canvas.SetTop(MicroscopeTableRect, newPosY);
         }
 
+        // TODO: Implement stepper animation (maybe zig-zag)?
+        // TODO: Not sure if an already pending animations messes with clicks, maybe I need to handle that.
         private void UIAnimateMicroscopeTable(Point targetPosition, double animationStepSpeed = 0.5)
         {
             // Get new positions requsted by the user.
@@ -205,11 +231,12 @@ namespace MicroscopeTable.Components
             MicroscopeTableRect.BeginAnimation(Canvas.TopProperty, animY);
         }
 
-        private void UIUpdateTablePositionInControlPanel(Position position)
+        private void UIUpdateDataInControlPanel(Position position)
         {
             if (Window.GetWindow(this) is MainWindow parentWindow)
             {
                 parentWindow.controlpanel.UpdateCenterPosition(position);
+                parentWindow.controlpanel.UpdateCurrentStepsInAxisControls();
             }
             else
             {

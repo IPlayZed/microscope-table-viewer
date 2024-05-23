@@ -6,7 +6,10 @@
         xmlns:components="clr-namespace:MicroscopeTable.Components"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="Microscope EDA" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="Microscope EDA"
+        Icon="Resources/app.ico">
+    <!-- TODO: Handle resizing better, until then disable it. -->
     <Grid>
         <!-- Define columns: the first one is larger, the second one is smaller -->
         <Grid.ColumnDefinitions>

@@ -79,6 +79,42 @@ namespace MicroscopeTable.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The input provided in a field is invalid..
+        /// </summary>
+        internal static string ControlPanelInvalidInput {
+            get {
+                return ResourceManager.GetString("ControlPanelInvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This feature is not yet implemented..
+        /// </summary>
+        internal static string ControlPanelNotImplemented {
+            get {
+                return ResourceManager.GetString("ControlPanelNotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will reset the environment! Do you want to proceed?.
+        /// </summary>
+        internal static string ControlPanelResetEnvironment {
+            get {
+                return ResourceManager.GetString("ControlPanelResetEnvironment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Animation speed updated to {0}..
+        /// </summary>
+        internal static string ControlPanelSpeedUpdated {
+            get {
+                return ResourceManager.GetString("ControlPanelSpeedUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string ErrorTitle {
@@ -88,11 +124,29 @@ namespace MicroscopeTable.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        internal static string InfoTitle {
+            get {
+                return ResourceManager.GetString("InfoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not communicate with visualization panel..
         /// </summary>
         internal static string VisualizationPanelCommunicationError {
             get {
                 return ResourceManager.GetString("VisualizationPanelCommunicationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string WarningTitle {
+            get {
+                return ResourceManager.GetString("WarningTitle", resourceCulture);
             }
         }
     }

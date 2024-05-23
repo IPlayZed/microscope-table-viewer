@@ -123,10 +123,28 @@
   <data name="ControlPanelCommunicationError" xml:space="preserve">
     <value>Could not communicate with control panel.</value>
   </data>
+  <data name="ControlPanelInvalidInput" xml:space="preserve">
+    <value>The input provided in a field is invalid.</value>
+  </data>
+  <data name="ControlPanelNotImplemented" xml:space="preserve">
+    <value>This feature is not yet implemented.</value>
+  </data>
+  <data name="ControlPanelResetEnvironment" xml:space="preserve">
+    <value>This will reset the environment! Do you want to proceed?</value>
+  </data>
+  <data name="ControlPanelSpeedUpdated" xml:space="preserve">
+    <value>Animation speed updated to {0}.</value>
+  </data>
   <data name="ErrorTitle" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="InfoTitle" xml:space="preserve">
+    <value>Info</value>
+  </data>
   <data name="VisualizationPanelCommunicationError" xml:space="preserve">
     <value>Could not communicate with visualization panel.</value>
+  </data>
+  <data name="WarningTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
 </root>
