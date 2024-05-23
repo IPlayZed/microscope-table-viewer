@@ -23,7 +23,7 @@ The following features are avaiblable:
 - **Adjustabe animation speed**: Modifiable in the control panel.
 - **Custom gear setup**: The gear parameters can be adjusted based.
 - **Robust error handling and user guidance**:
-    - In the right bottom side there is a live mouse coordinate tracker. (Can't be seen in the screenshot due to Windows' screenshot being a bit wonky...)
+    - In the right bottom side there is a live mouse coordinate tracker.
     - The green help area shows clickable positions.
     - If the user clicks *outside* the program notifiers the user about the current state of the simulation and cancels the operation.
     - Before creating a new configuration, the user is prompted, and the operation can be cancelled.
